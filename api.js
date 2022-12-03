@@ -1,6 +1,6 @@
 const express = require('express');
 const dbConnect = require('./mongodb');
-const mongodb = require('mongodb') // added library for deleted the data because for Id we ne instance of object
+const mongodb = require('mongodb') // added library for deleted the data because for Id we need instance of object
 const app = express();
 
 // when we generally want to data from postman or request, then we have to use..
