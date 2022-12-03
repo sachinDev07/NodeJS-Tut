@@ -238,14 +238,35 @@
 
 // reading a data
 
-const dbConnect= require('./mongodb');
+// const dbConnect= require('./mongodb');
 
-const main=async ()=>{
-   let data = await dbConnect();
-   data = await data.find().toArray();
-   console.log(data)
+// const main=async ()=>{
+//    let data = await dbConnect();
+//    data = await data.find().toArray();
+//    console.log(data)
+// }
+
+// main()
+
+
+//  💡💡💡 --- Mongoose --- 💡💡💡
+
+const mongoose = require('mongoose');
+
+const main = async () => {
+   // connecting to the database
+   await mongoose.connect('mongodb://0.0.0.0:27017/ecom');
+   const ProductSchema = new mongoose.Schema({
+      name:String,
+      price:Number
+   });
+
+   const ProductModel = mongoose.model('products', ProductSchema);
+   let data = new ProductModel({name:"Iphone 15",price:1000});
+   let result = await data.save();
+   console.log(result);
 }
 
-main()
+main();
 
 
