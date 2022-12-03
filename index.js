@@ -235,7 +235,6 @@
 
 // app.listen(7000);
 
-
 // reading a data
 
 // const dbConnect= require('./mongodb');
@@ -248,25 +247,60 @@
 
 // main()
 
-
 //  💡💡💡 --- Mongoose --- 💡💡💡
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const main = async () => {
-   // connecting to the database
-   await mongoose.connect('mongodb://0.0.0.0:27017/ecom');
-   const ProductSchema = new mongoose.Schema({
-      name:String,
-      price:Number
-   });
+mongoose.connect("mongodb://0.0.0.0:27017/ecom");
 
-   const ProductModel = mongoose.model('products', ProductSchema);
-   let data = new ProductModel({name:"Iphone 15",price:1000});
-   let result = await data.save();
-   console.log(result);
+const ProductSchema = new mongoose.Schema({
+  name: String,
+  price: Number,
+});
+
+const saveInDB = async () => {
+  const Product = mongoose.model("products", ProductSchema);
+  let data = new Product({
+    name: "Iphone 15",
+    brand: "apple",
+    price: 1000,
+  });
+  let result = await data.save();
+  console.log(result);
+};
+
+// saveInDB();
+
+// 💡 CURD OPERATIONS WITH MONGOOSE
+
+// update:
+const updateInDB = async () => {
+  const Product = mongoose.model("products", ProductSchema);
+  let data = await Product.updateOne(
+    { name: "Iphone 15" },
+    { $set: { price: 500 } }
+  );
+  console.log(data);
+};
+
+// updateInDB();
+
+
+// Delete
+const deleteInDB = async () => {
+   const Product = mongoose.model('products', ProductSchema);
+   let data = await Product.deleteOne({name:'Iphone 15'});
+   console.log(data);
 }
 
-main();
+// deleteInDB();
 
 
+// find in DB ...reading from the database
+const findInDB = async () => {
+   const Product = mongoose.model('products', ProductSchema);
+   let data = await Product.find();
+   console.log(data);
+}
+
+findInDB();
