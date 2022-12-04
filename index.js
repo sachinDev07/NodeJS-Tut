@@ -2,7 +2,7 @@ const express = require('express');
 const con =require('./config');
 const app = express();
 
-app.use(express.json());
+app.use(express.json()); // for converting request body into json format
 
 // get api 
 app.get('/', (req,resp)=>{
@@ -26,5 +26,17 @@ app.post('/', (req,resp)=>{
       }
    })
 });
+
+// put api...updating data
+app.put('/:firstname', (req, resp) => {
+   const data = [req.body.firstname, req.body.lastname, req.params.firstname];
+   con.query('UPDATE student SET firstname = ?, lastname = ? where firstname = ?', data, (err, result, fields)=>{
+      if(err){
+         resp.send(err)
+      }else {
+         resp.send(result)
+      }
+   })
+})
 
 app.listen(5000);
