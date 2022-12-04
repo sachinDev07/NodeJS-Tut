@@ -39,4 +39,16 @@ app.put('/:firstname', (req, resp) => {
    })
 })
 
+// delete api...deleting data from the record... 
+app.delete('/:firstname', (req, resp) => {
+   con.query('DELETE FROM student WHERE firstname =' + req.params.firstname, (err, result) => {
+      if(err){
+         resp.send(err)
+      }else {
+         resp.send(result)
+      }
+   })
+})
+// something error in it.. 
+
 app.listen(5000);
